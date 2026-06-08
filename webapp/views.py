@@ -67,3 +67,12 @@ def product_delete_view(request, pk):
         product.delete()
         return redirect('products')
     return render(request, 'webapp/product_delete.html', {'product': product})
+
+
+def category_add_view(request):
+    if request.method == 'POST':
+        title = request.POST.get('title', '').strip()
+        if title:
+            Category.objects.create(title=title, description=request.POST.get('description', '').strip())
+            return redirect('products')
+    return render(request, 'webapp/category_add.html')
