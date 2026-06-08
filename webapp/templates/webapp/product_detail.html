@@ -1,0 +1,17 @@
+{% extends 'webapp/base.html' %}
+{% block content %}
+<div class="card">
+    <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.title }}" style="max-height: 400px; object-fit: cover;">
+    <div class="card-body">
+        <h1>{{ product.title }}</h1>
+        <p>Категория: {{ product.category.title }}</p>
+        <p>Цена: {{ product.price }}$</p>
+        <p>Остаток: {{ product.stock }}</p>
+        <p>{{ product.description }}</p>
+        <p class="text-muted">Добавлено: {{ product.created_at|date:"d.m.Y H:i" }}</p>
+        <a href="{% url 'product_edit' product.pk %}" class="btn btn-warning">Редактировать</a>
+        <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger">Удалить</a>
+        <a href="{% url 'products' %}" class="btn btn-secondary">Назад</a>
+    </div>
+</div>
+{% endblock %}
