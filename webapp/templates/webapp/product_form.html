@@ -1,16 +1,9 @@
 {% extends 'webapp/base.html' %}
-{% block title %}{{ title_text }}{% endblock %}
+{% block title %}{% if product %}Редактировать{% else %}Добавить{% endif %} товар{% endblock %}
 {% block content %}
-<h1 class="mb-4">{{ title_text }}</h1>
-{% if form.errors %}<div class="alert alert-danger">{{ form.errors }}</div>{% endif %}
-<form method="post">{% csrf_token %}
-    <div class="mb-3"><label class="form-label">Наименование</label>{{ form.title }}</div>
-    <div class="mb-3"><label class="form-label">Цена</label>{{ form.price }}</div>
-    <div class="mb-3"><label class="form-label">Изображение (URL)</label>{{ form.image_url }}</div>
-    <div class="mb-3"><label class="form-label">Категория</label>{{ form.category }}</div>
-    <div class="mb-3"><label class="form-label">Остаток</label>{{ form.stock }}</div>
-    <div class="mb-3"><label class="form-label">Описание</label>{{ form.description }}</div>
-    <button type="submit" class="btn btn-success">{{ button_text }}</button>
+<h1 class="mb-4">{% if product %}Редактировать{% else %}Добавить{% endif %} товар</h1>
+<form method="post">{% csrf_token %}{{ form.as_p }}
+    <button type="submit" class="btn btn-success">Сохранить</button>
     <a href="{% url 'products' %}" class="btn btn-outline-secondary">Отмена</a>
 </form>
 {% endblock %}

@@ -11,6 +11,10 @@
         <p class="text-muted">Добавлено: {{ product.created_at|date:"d.m.Y H:i" }}</p>
         <a href="{% url 'product_edit' product.pk %}" class="btn btn-warning">Редактировать</a>
         <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger">Удалить</a>
+        <form method="post" action="{% url 'cart_add' product.pk %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">🛒 В корзину</button>
+        </form>
         <a href="{% url 'products' %}" class="btn btn-secondary">Назад</a>
     </div>
 </div>

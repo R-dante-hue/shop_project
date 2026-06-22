@@ -1,0 +1,40 @@
+{% extends 'webapp/base.html' %}
+{% block title %}Корзина{% endblock %}
+{% block content %}
+<h1 class="mb-4">🛒 Корзина</h1>
+
+{% if cart_items %}
+<table class="table table-striped">
+    <thead>
+        <tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.product.title }}</td>
+            <td>{{ item.product.price }}$</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.total }}$</td>
+            <td>
+                <form method="post" action="{% url 'cart_remove' item.pk %}" style="display: inline;">{% csrf_token %}<button class="btn btn-sm btn-outline-secondary">−</button></form>
+                <form method="post" action="{% url 'cart_delete' item.pk %}" style="display: inline;">{% csrf_token %}<button class="btn btn-sm btn-danger">✕</button></form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr><th colspan="3">Итого:</th><th>{{ total }}$</th><th></th></tr>
+    </tfoot>
+</table>
+
+<hr>
+<h3>Оформить заказ</h3>
+<form method="post" action="{% url 'order_create' %}">
+    {% csrf_token %}
+    {{ order_form.as_p }}
+    <button type="submit" class="btn btn-primary">Оформить заказ</button>
+</form>
+{% else %}
+<p>Корзина пуста.</p>
+{% endif %}
+{% endblock %}
